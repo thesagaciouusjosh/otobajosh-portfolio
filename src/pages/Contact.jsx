@@ -1,5 +1,7 @@
 import React, { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
+import { motion } from 'framer-motion';
+import { Send, Mail, MapPin, Phone } from 'lucide-react';
 
 const Contact = () => {
     const form = useRef();
@@ -31,83 +33,159 @@ const Contact = () => {
     };
 
     return (
-        <section className="section">
+        <section className="section" style={{ paddingTop: 'var(--spacing-xl)' }}>
             <div className="container">
-                <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-                    <h1 className="mb-md text-center">Start a Project</h1>
-                    <p className="mb-lg text-center" style={{ fontSize: '1.125rem' }}>
-                        Ready to elevate your brand's voice? Tell us about your project, and we'll be in touch shortly.
-                    </p>
+                <div className="grid grid-2" style={{ gap: 'var(--spacing-xl)', alignItems: 'start' }}>
+                    {/* Contact Info */}
+                    <motion.div
+                        initial={{ opacity: 0, x: -30 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8 }}
+                    >
+                        <h1 className="mb-md">Let's Start a <span style={{ color: 'var(--color-accent)' }}>Conversation</span>.</h1>
+                        <p className="mb-lg" style={{ fontSize: '1.25rem', lineHeight: '1.8' }}>
+                            Ready to elevate your brand's voice? Tell us about your project, and we'll help you find the right words to say it.
+                        </p>
 
-                    {statusMessage && (
-                        <div style={{
-                            padding: '1rem',
-                            marginBottom: '1.5rem',
-                            borderRadius: '4px',
-                            backgroundColor: statusMessage.type === 'success' ? '#d4edda' : '#f8d7da',
-                            color: statusMessage.type === 'success' ? '#155724' : '#721c24',
-                            border: `1px solid ${statusMessage.type === 'success' ? '#c3e6cb' : '#f5c6cb'}`
-                        }}>
-                            {statusMessage.text}
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                                <div style={{
+                                    width: '50px',
+                                    height: '50px',
+                                    borderRadius: '50%',
+                                    backgroundColor: 'var(--color-bg-alt)',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    color: 'var(--color-accent)'
+                                }}>
+                                    <Mail size={24} />
+                                </div>
+                                <div>
+                                    <h3 style={{ fontSize: '1rem', marginBottom: '0.25rem' }}>Email Us</h3>
+                                    <p style={{ marginBottom: 0 }}>hello@otobajosh.com</p>
+                                </div>
+                            </div>
+
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                                <div style={{
+                                    width: '50px',
+                                    height: '50px',
+                                    borderRadius: '50%',
+                                    backgroundColor: 'var(--color-bg-alt)',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    color: 'var(--color-accent)'
+                                }}>
+                                    <Phone size={24} />
+                                </div>
+                                <div>
+                                    <h3 style={{ fontSize: '1rem', marginBottom: '0.25rem' }}>Call Us</h3>
+                                    <p style={{ marginBottom: 0 }}>+1 (555) 123-4567</p>
+                                </div>
+                            </div>
                         </div>
-                    )}
+                    </motion.div>
 
-                    <form ref={form} onSubmit={sendEmail} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                        <div>
-                            <label htmlFor="user_name" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 500 }}>Name</label>
-                            <input type="text" name="user_name" id="user_name" required style={{
-                                width: '100%',
-                                padding: '1rem',
-                                border: '1px solid var(--color-border)',
-                                fontFamily: 'var(--font-sans)',
-                                fontSize: '1rem'
-                            }} placeholder="Your Name" />
-                        </div>
+                    {/* Contact Form */}
+                    <motion.div
+                        initial={{ opacity: 0, x: 30 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8, delay: 0.2 }}
+                        style={{
+                            backgroundColor: 'var(--color-bg)',
+                            padding: '3rem',
+                            borderRadius: '12px',
+                            boxShadow: '0 20px 40px rgba(0,0,0,0.05)',
+                            border: '1px solid var(--color-border)'
+                        }}
+                    >
+                        {statusMessage && (
+                            <motion.div
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                style={{
+                                    padding: '1rem',
+                                    marginBottom: '1.5rem',
+                                    borderRadius: '4px',
+                                    backgroundColor: statusMessage.type === 'success' ? '#d4edda' : '#f8d7da',
+                                    color: statusMessage.type === 'success' ? '#155724' : '#721c24',
+                                    border: `1px solid ${statusMessage.type === 'success' ? '#c3e6cb' : '#f5c6cb'}`
+                                }}
+                            >
+                                {statusMessage.text}
+                            </motion.div>
+                        )}
 
-                        <div>
-                            <label htmlFor="user_email" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 500 }}>Email Address</label>
-                            <input type="email" name="user_email" id="user_email" required style={{
-                                width: '100%',
-                                padding: '1rem',
-                                border: '1px solid var(--color-border)',
-                                fontFamily: 'var(--font-sans)',
-                                fontSize: '1rem'
-                            }} placeholder="name@company.com" />
-                        </div>
+                        <form ref={form} onSubmit={sendEmail} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                            <div>
+                                <label htmlFor="user_name" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 500 }}>Name</label>
+                                <input type="text" name="user_name" id="user_name" required style={{
+                                    width: '100%',
+                                    padding: '1rem',
+                                    border: '1px solid var(--color-border)',
+                                    borderRadius: '4px',
+                                    fontFamily: 'var(--font-sans)',
+                                    fontSize: '1rem',
+                                    backgroundColor: 'var(--color-bg-alt)'
+                                }} placeholder="Your Name" />
+                            </div>
 
-                        <div>
-                            <label htmlFor="budget" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 500 }}>Budget Range</label>
-                            <select name="budget" id="budget" style={{
-                                width: '100%',
-                                padding: '1rem',
-                                border: '1px solid var(--color-border)',
-                                fontFamily: 'var(--font-sans)',
-                                fontSize: '1rem',
-                                backgroundColor: 'white'
-                            }}>
-                                <option value="">Select a range</option>
-                                <option value="small">$1,000 - $5,000</option>
-                                <option value="medium">$5,000 - $10,000</option>
-                                <option value="large">$10,000+</option>
-                            </select>
-                        </div>
+                            <div>
+                                <label htmlFor="user_email" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 500 }}>Email Address</label>
+                                <input type="email" name="user_email" id="user_email" required style={{
+                                    width: '100%',
+                                    padding: '1rem',
+                                    border: '1px solid var(--color-border)',
+                                    borderRadius: '4px',
+                                    fontFamily: 'var(--font-sans)',
+                                    fontSize: '1rem',
+                                    backgroundColor: 'var(--color-bg-alt)'
+                                }} placeholder="name@company.com" />
+                            </div>
 
-                        <div>
-                            <label htmlFor="message" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 500 }}>Project Details</label>
-                            <textarea name="message" id="message" rows="5" required style={{
-                                width: '100%',
-                                padding: '1rem',
-                                border: '1px solid var(--color-border)',
-                                fontFamily: 'var(--font-sans)',
-                                fontSize: '1rem',
-                                resize: 'vertical'
-                            }} placeholder="Tell us about your goals..."></textarea>
-                        </div>
+                            <div>
+                                <label htmlFor="budget" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 500 }}>Budget Range</label>
+                                <select name="budget" id="budget" style={{
+                                    width: '100%',
+                                    padding: '1rem',
+                                    border: '1px solid var(--color-border)',
+                                    borderRadius: '4px',
+                                    fontFamily: 'var(--font-sans)',
+                                    fontSize: '1rem',
+                                    backgroundColor: 'var(--color-bg-alt)'
+                                }}>
+                                    <option value="">Select a range</option>
+                                    <option value="small">$1,000 - $5,000</option>
+                                    <option value="medium">$5,000 - $10,000</option>
+                                    <option value="large">$10,000+</option>
+                                </select>
+                            </div>
 
-                        <button type="submit" className="btn" disabled={isSubmitting} style={{ marginTop: '1rem', width: '100%', opacity: isSubmitting ? 0.7 : 1 }}>
-                            {isSubmitting ? 'Sending...' : 'Send Message'}
-                        </button>
-                    </form>
+                            <div>
+                                <label htmlFor="message" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 500 }}>Project Details</label>
+                                <textarea name="message" id="message" rows="5" required style={{
+                                    width: '100%',
+                                    padding: '1rem',
+                                    border: '1px solid var(--color-border)',
+                                    borderRadius: '4px',
+                                    fontFamily: 'var(--font-sans)',
+                                    fontSize: '1rem',
+                                    resize: 'vertical',
+                                    backgroundColor: 'var(--color-bg-alt)'
+                                }} placeholder="Tell us about your goals..."></textarea>
+                            </div>
+
+                            <button type="submit" className="btn" disabled={isSubmitting} style={{ marginTop: '1rem', width: '100%', opacity: isSubmitting ? 0.7 : 1 }}>
+                                {isSubmitting ? 'Sending...' : (
+                                    <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                        Send Message <Send size={18} />
+                                    </span>
+                                )}
+                            </button>
+                        </form>
+                    </motion.div>
                 </div>
             </div>
         </section>
